@@ -49,17 +49,17 @@ jobs:
           git config --global user.email "victor.delamonica@epitech.eu"
           git config --global user.name "VictorDelamonica"
 
-      - name: Merge develop into master
+      - name: Merge develop into preprod
         run: |
-          git fetch origin master
-          git checkout master
-          git merge -s recursive -X ours --allow-unrelated-histories --no-ff develop -m "Merge develop into master (#${{ steps.read_counter.outputs.value }})"
+          git fetch origin preprod
+          git checkout preprod
+          git merge -s recursive -X ours --allow-unrelated-histories --no-ff develop -m "Merge develop into preprod (#${{ steps.read_counter.outputs.value }})"
 
-      - name: Push changes to master
+      - name: Push changes to preprod
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
+          branch: preprod
 
       - name: Write counter to artifact
         if: always()

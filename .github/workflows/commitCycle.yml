@@ -46,7 +46,4 @@ jobs:
           git checkout preprod
           git pull
           git merge --allow-unrelated-histories develop -m "Merge develop into preprod"
-          git push origin preprod
-        with:
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push origin preprod --force

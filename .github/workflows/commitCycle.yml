@@ -48,7 +48,5 @@ jobs:
           git merge --allow-unrelated-histories develop -m "Merge develop into preprod"
 
       - name: Push changes to preprod
-        uses: ad-m/github-push-action@preprod
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: preprod
+        run: |
+          git push origin preprod

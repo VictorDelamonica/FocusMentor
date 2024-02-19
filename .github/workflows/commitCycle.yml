@@ -46,7 +46,4 @@ jobs:
           git checkout preprod
           git pull
           git merge --allow-unrelated-histories develop -m "Merge develop into preprod"
-
-      - name: Push changes to preprod
-        run: |
           git push origin preprod

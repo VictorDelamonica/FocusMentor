@@ -46,4 +46,4 @@ jobs:
           git checkout preprod
           git pull
           git merge --allow-unrelated-histories develop -m "Merge develop into preprod"
-          git push origin preprod --force
+          git push --force

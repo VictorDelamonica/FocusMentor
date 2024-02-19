@@ -1,0 +1,54 @@
+name: Commit Cycle
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.9'
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze project source
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+  push_to_preprod:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "victor.delamonica@epitech.eu"
+          git config --global user.name "VictorDelamonica"
+
+      - name: Merge develop into preprod
+        run: |
+          git fetch
+          git checkout preprod
+          git pull
+          git merge --allow-unrelated-histories develop -m "Merge develop into preprod"
+
+      - name: Push changes to preprod
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: preprod
